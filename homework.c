@@ -77,25 +77,80 @@ void diagonalize_matrix(int n, double** A, double* eigenvalues, double* eigenvec
 
 void main(){
 
-printf("Enter the number of Carbon atoms: \n");
-int  n_c;
-scanf("%d",&n_c);
+// Total Number of Electrons 
+	printf("Enter the total number of atoms: \n");
+	int  n_c;
+	scanf("%d",&n_c);
 
-double** huckel=malloc_2d(n_c,n_c);
+// Allocation of the Huckel Matrix 
+	double** huckel=malloc_2d(n_c,n_c);
+
+// Asking if There are different atoms in the system
+	printf("Different Atoms in the system? [Yes=1]: \n");
+	int differ;
+	scanf("%d",&differ);
+
+// Adding the Alpha values if there are different atoms 
+	if(differ==1){
+
+		// Just a trial! Asking if the atoms alternate in the system or not.
+			printf("Do the 2 (or more) atoms alternate? [No= 0] : \n");
+			int altern;
+			scanf("%d",&altern);
+			
+			// If it does not alternate, then manually entering the values of Alpha
+				if(altern==0){
+					for(int i=0;i<n_c;i++){ 
+					printf("Enter the alpha value of atom %d out of %d \n: ",i,n_c);
+						int alpha;
+						scanf("%d",&alpha);
+						huckel[i][i] = alpha;
+						}
+					}
+				
+				// If the atoms alternate in the system [2 atoms i guess] 
+				else{
+					printf("-----------------------------------------------------\n");
+					printf("This feature only works for 2 atoms unfortunately :/\n");
+					printf("-----------------------------------------------------\n");
+					
+					printf("Enter the alpha value of atom 1\n:");
+					double alpha1;
+				        scanf("%lf",&alpha1);
+					
+					printf("Enter the alpha value of atom 2\n:");
+					double alpha2;
+					scanf("%lf",&alpha2);
+					
+					for(int i=0;i<n_c;i++){
+						
+						if(i%2==0){
+						huckel[i][i]=alpha1;
+						}
+						
+						else{
+						huckel[i][i]=alpha2;
+						}
+					}	
+				}
+}
+
+
 printf("Enter how many beta values: \n");
 int numb;
 scanf("%d",&numb);
 
-float beta[numb];
+double beta[numb];
 for (int i=0;i<numb;i++){
 printf("Enter the beta value: \n");
-scanf("%f",&beta[i]);
+scanf("%lf",&beta[i]);
 }
 
 
 printf("Enter if Open[=1] or Cyclic[=0]: \n");
 int open;
 scanf("%d",&open);
+
 
 if (open ==0){
 
