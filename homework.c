@@ -94,7 +94,7 @@ void main(){
 	if(differ==1){
 
 		// Just a trial! Asking if the atoms alternate in the system or not.
-			printf("Do the 2 (or more) atoms alternate? [No= 0] : \n");
+			printf("So, 2 atom alternation or more atoms ? [More atoms = 0] : \n");
 			int altern;
 			scanf("%d",&altern);
 			
@@ -133,40 +133,40 @@ void main(){
 						}
 					}	
 				}
-}
-
-
-printf("Enter how many beta values: \n");
-int numb;
-scanf("%d",&numb);
-
-double beta[numb];
-for (int i=0;i<numb;i++){
-printf("Enter the beta value: \n");
-scanf("%lf",&beta[i]);
-}
-
-
-printf("Enter if Open[=1] or Cyclic[=0]: \n");
-int open;
-scanf("%d",&open);
-
-
-if (open ==0){
-
-	if (n_c%numb ==0){
-		huckel[n_c-1][0]=beta[1];
-		huckel[0][n_c-1]=beta[1];
 	}
 
-	else{
-		huckel[n_c-1][0]=beta[0];
-		huckel[0][n_c-1]=beta[0];
+// Now Allocating the Beta values:
+	printf("Enter how many beta values [1 or 2]: \n");
+	int numb;
+	scanf("%d",&numb);
+
+	double beta[numb];
+	for (int i=0;i<numb;i++){
+		printf("Enter the beta value %d: \n",i+1);
+		scanf("%lf",&beta[i]);
 	}
-}
 
-for (int i=0;i<n_c-1;i++){
+// Asking if the system is linear or cyclic
+	printf("Enter if Open[=1] or Cyclic[=0]: \n");
+	int open;
+	scanf("%d",&open);
 
+// If the system is cyclic
+	if (open ==0){
+		if (n_c%numb ==0){
+			huckel[n_c-1][0]=beta[1];
+			huckel[0][n_c-1]=beta[1];
+		}
+
+		else{
+			huckel[n_c-1][0]=beta[0];
+			huckel[0][n_c-1]=beta[0];
+		}
+	}
+
+// Allocating the general Beta values
+	for (int i=0;i<n_c-1;i++){
+	
 		//printf("%d,%d\t%d,%d\n",i,i+1,i+1,i);
 		if (i%numb==0){
 			huckel[i][i+1]=beta[0];
@@ -178,17 +178,18 @@ for (int i=0;i<n_c-1;i++){
                 	huckel[i+1][i]=beta[1];
 		}
 
-}
-
-
-printf("Successful building of Huckel Matrix: \n");
-
-for(int i=0;i<n_c;i++){
-	for(int j=0;j<n_c;j++){
-	printf("%lf\t",huckel[i][j]);
 	}
-	printf("\n");
-}
+
+
+	printf("Successful building of Huckel Matrix: \n");
+
+// Printing the Huckel Matrix  
+	for(int i=0;i<n_c;i++){
+		for(int j=0;j<n_c;j++){
+		printf("%lf\t",huckel[i][j]);
+		}
+		printf("\n");
+	}
 
 // Allocate memory for eigenvalues and eigenvectors
     double* eigenvalues = (double*)malloc(n_c * sizeof(double));
@@ -202,25 +203,28 @@ for(int i=0;i<n_c;i++){
     // Diagonalize the matrix
     diagonalize_matrix(n_c, huckel, eigenvalues, eigenvectors);
 
-FILE* fptr;
-     fptr = fopen("eigenvalues_.txt","w");
-    for (int i = 0; i < n_c; i++) {
-       fprintf(fptr,"%.4f", eigenvalues[i]);
-       fputs("\n",fptr);
-    }
-fclose(fptr);
+// Writing the eigenvalues to a file
+	FILE* fptr;
+     	fptr = fopen("eigenvalues_.txt","w");
+    	for (int i = 0; i < n_c; i++) {
+       		fprintf(fptr,"%.4f", eigenvalues[i]);
+       	fputs("\n",fptr);
+    	}
+	fclose(fptr);
 
-FILE* fptr1;
-fptr1=fopen("eigenvectors.txt","w");
-    for (int i = 0; i < n_c; i++) {
-        for (int j = 0; j < n_c; j++) {
-            fprintf(fptr1,"%.4f", eigenvectors[i * n_c + j]);
-	    fputs("\t",fptr1);
-        }
-        fputs("\n",fptr1);
-    }
-fclose(fptr1);
+// Writing the eigenvectors to a file
+	FILE* fptr1;
+	fptr1=fopen("eigenvectors.txt","w");
+   	for (int i = 0; i < n_c; i++) {
+        	for (int j = 0; j < n_c; j++) {
+            		fprintf(fptr1,"%.4f", eigenvectors[i * n_c + j]);
+	    		fputs("\t",fptr1);
+        		}
+        	fputs("\n",fptr1);
+    	}
+	fclose(fptr1);
 
-free_2d(huckel);
+// Freeing the allocated space
+	free_2d(huckel);
 
 }
