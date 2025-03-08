@@ -1,0 +1,4 @@
+ATOM_NUMBER 4  
+ALPHA 2 3 
+BETA  -2 -3 
+OPEN 0 
