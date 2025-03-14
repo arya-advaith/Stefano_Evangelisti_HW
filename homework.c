@@ -71,6 +71,7 @@ int main() {
 // Allocation of the Huckel Matrix 
 	double** huckel=malloc_2d(n_c,n_c);
 
+	printf("\n");
 // Now Allocating the Beta values:
    	int numb;
 	if (read_count >= 5){
@@ -79,7 +80,6 @@ int main() {
 	else {
 		numb = 1;
 	}
-	printf("num of beta %d \n",numb);
 
 // Now Allocating the lpha values
 	int numa;
