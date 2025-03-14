@@ -19,6 +19,17 @@ This program creates and diagonalizes Hückel matrices based on input parameters
 - GCC compiler
 - LAPACK and LAPACKE libraries
 - Standard C libraries (stdio.h, stdlib.h, math.h)
+- Python with pandas and matplotlib (for visualization)
+
+Installation
+
+Clone this repository
+Ensure LAPACK and LAPACKE are installed on your system
+Compile the program using the included makefile:
+
+```bash
+Makefile
+```
 
 ## Installation
 
@@ -81,6 +92,12 @@ In this example:
 
 ## Technical Details
 
+### OUTPUT FOLDERS:
+
+- Each folder in this repository represents the different permutations and combinations possible for the alpha and beta values which are scientifically relevant.
+- Each of the folders also contain a `fileopen.py` which is basically the python program used to generate the plots of the eigenvalues to visualize the Fermi Levels.
+- The images are saved to the corresponding folder as a `.png` file.
+
 ### Matrix Construction
 
 - For linear systems (OPEN = 1): Only neighboring atoms are connected
@@ -95,8 +112,9 @@ The program uses LAPACK's `dgeev` function to calculate the eigenvalues and eige
 ### Memory Management
 
 The code includes proper memory management:
-- Dynamic allocation for matrices and arrays
-- Custom 2D array allocation and deallocation functions
+- Dynamic allocation for matrices and arrays [Not the best implementation but works decent]
+- Custom 2D array allocation and deallocation functions [Taken from the Advanced Computational Techniques Course]
+- Reference: https://github.com/scemama/tccm-homeworks/tree/master/project3
 - Proper cleanup of all allocated resources
 
 ## License
