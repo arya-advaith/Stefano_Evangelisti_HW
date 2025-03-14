@@ -28,7 +28,7 @@ Ensure LAPACK and LAPACKE are installed on your system
 Compile the program using the included makefile:
 
 ```bash
-Makefile
+makefile
 ```
 
 ## Installation
